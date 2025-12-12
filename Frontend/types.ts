@@ -13,7 +13,7 @@ export enum Action {
 export type ExecutionMode = 'LOCAL' | 'DOTNET_API';
 
 export interface VLAN {
-  id: string;
+  id: string | number;
   vlanId: number;
   name: string;
   subnet: string;
@@ -22,14 +22,14 @@ export interface VLAN {
 }
 
 export interface Device {
-  id: string;
+  id: string | number;
   name: string;
   ip: string;
   type: 'PC' | 'SERVER' | 'PRINTER' | 'IOT';
 }
 
 export interface ACLRule {
-  id: string;
+  id: string | number;
   srcVlanId: number;
   dstVlanId: number;
   protocol: Protocol;

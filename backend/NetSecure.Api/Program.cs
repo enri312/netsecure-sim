@@ -208,15 +208,49 @@ firewallGroup.MapDelete("/rules/{id}", async (int id, AppDbContext db) =>
 var simGroup = app.MapGroup("/api").WithTags("Simulation");
 
 // Main simulation endpoint (matches frontend expectation)
-simGroup.MapPost("/simulation", (TrafficSimulationRequest request, ITrafficEngine engine) =>
+simGroup.MapPost("/simulation", async (TrafficSimulationRequest request, ITrafficEngine engine, AppDbContext db) =>
 {
     var result = engine.Simulate(request);
+
+    // Persist log to database
+    var logEntry = new NetSecure.Api.Models.TrafficLog
+    {
+        Timestamp = DateTime.UtcNow,
+        SourceDevice = result.SrcDevice,
+        SourceVlan = result.SrcVlan,
+        DestinationDevice = result.DstDevice,
+        DestinationVlan = result.DstVlan,
+        Protocol = result.Protocol,
+        Result = result.Result,
+        Reason = result.Reason
+    };
+
+    db.TrafficLogs.Add(logEntry);
+    await db.SaveChangesAsync();
+
     return Results.Ok(result);
 });
 
-simGroup.MapPost("/traffic/simulate", (TrafficSimulationRequest request, ITrafficEngine engine) =>
+simGroup.MapPost("/traffic/simulate", async (TrafficSimulationRequest request, ITrafficEngine engine, AppDbContext db) =>
 {
     var result = engine.Simulate(request);
+
+    // Persist log to database
+    var logEntry = new NetSecure.Api.Models.TrafficLog
+    {
+        Timestamp = DateTime.UtcNow,
+        SourceDevice = result.SrcDevice,
+        SourceVlan = result.SrcVlan,
+        DestinationDevice = result.DstDevice,
+        DestinationVlan = result.DstVlan,
+        Protocol = result.Protocol,
+        Result = result.Result,
+        Reason = result.Reason
+    };
+
+    db.TrafficLogs.Add(logEntry);
+    await db.SaveChangesAsync();
+
     return Results.Ok(result);
 });
 

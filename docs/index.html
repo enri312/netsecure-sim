@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación NetSecure Sim - Final</title>
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .prose {
+            max-width: 85ch;
+            color: #374151;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: center;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #111827;
+            font-weight: 700;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.3em;
+        }
+
+        ul,
+        ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        li {
+            margin-bottom: 0.25em;
+        }
+
+        p {
+            margin-bottom: 1em;
+            line-height: 1.6;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.875em;
+            font-family: monospace;
+        }
+
+        pre {
+            background: #1f2937;
+            color: white;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-sm">NS</div>
+            <h1 class="text-lg font-bold m-0 text-white" style="margin:0 !important;">NetSecure</h1>
+        </div>
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <a href="#" onclick="showSection('intro')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Inicio</a>
+            <div class="mt-4 px-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Manuales</div>
+            <a href="#" onclick="showSection('manual-usuario')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Usuario</a>
+            <a href="#" onclick="showSection('manual-tecnico')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Técnico</a>
+            <div class="mt-4 px-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Diagramas</div>
+            <a href="#" onclick="showSection('use-cases')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Casos de
+                Uso</a>
+            <a href="#" onclick="showSection('architecture')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Arquitectura</a>
+            <a href="#" onclick="showSection('data-flow')"
+                class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-800 hover:text-white transition">Flujo de
+                Datos</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800 text-xs text-gray-500 text-center">
+            v1.0.0 &copy; 2025
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto bg-white">
+        <div class="max-w-4xl mx-auto p-8 md:p-12">
+            <div id="content" class="prose">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- MARKDOWN CONTENT STORAGE -->
+
+    <textarea id="md-intro" style="display:none;">
+# Documentación Oficial NetSecure Sim
+**Sistema de Simulación de Seguridad de Red (Tesis)**
+
+Bienvenido a la documentación centralizada. Aquí encontrará toda la información necesaria para operar, administrar y entender la arquitectura del sistema.
+
+### ¿Qué es NetSecure Sim?
+Es una plataforma educativa y operativa para diseñar redes seguras, configurar VLANs y ACLs, y simular tráfico utilizando un motor de análisis real apoyado por Inteligencia Artificial.
+
+### Navegación
+Utilice el menú lateral para acceder a:
+- **Manual de Usuario**: Guía para operar el software.
+- **Manual Técnico**: Guía para instalación y despliegue.
+- **Diagramas Técnicos**: Representaciones visuales UML/C4 del sistema.
+    </textarea>
+
+    <textarea id="md-manual-usuario" style="display:none;">
+# Manual de Usuario
+
+## 1. Acceso y Login
+- **Credenciales por defecto**:
+  - Admin: `CENV` / `8994C`
+  - Técnico: `NMNV` / `8994N`
+
+## 2. Gestión de Red
+- **VLANs**: Preconfiguradas en el sistema (VLAN 10, 20, 30, etc.).
+- **ACLs (Firewall)**:
+  1. Vaya al panel izquierdo.
+  2. Seleccione Origen, Destino, Protocolo y Acción.
+  3. Click en `+` para aplicar la regla.
+
+## 3. Simulación
+- En el panel derecho, configure el tráfico a simular.
+- Active casillas **UTM** (IPS, Antivirus) para probar capas de seguridad avanzadas.
+- Presione **SIMULAR**.
+- El resultado aparecerá en la consola de logs inferior.
+
+## 4. Análisis IA
+- Click en el botón **Análisis IA** en el encabezado.
+- El sistema consultará a la IA (Ollama/Gemini) y le dará recomendaciones sobre sus ACLs actuales.
+    </textarea>
+
+    <textarea id="md-manual-tecnico" style="display:none;">
+# Manual Técnico
+
+## Requisitos
+- **Docker**: Para PostgreSQL 18.
+- **.NET 10 SDK**: Para el Backend API.
+- **Node.js**: Para el Frontend.
+
+## Instalación
+1. **Base de Datos**: `docker-compose up -d db` (backend/docker-compose.yml).
+2. **Backend**: `dotnet run` (backend/NetSecure.Api). Puerto 5009.
+3. **Frontend**: `npm run dev`. Puerto 3000.
+
+## Estructura
+- `/backend`: API .NET Minimal.
+- `/Frontend`: React + Vite + Electron.
+- `/electron`: Main process de Electron.
+    </textarea>
+
+    <textarea id="md-use-cases" style="display:none;">
+# Diagrama de Casos de Uso
+
+```mermaid
+graph LR
+    subgraph Actores
+    Admin[👤 Administrador]
+    Tech[👤 Técnico]
+    IA[🤖 Sistema IA]
+    end
+
+    subgraph NetSecure_Sim
+    UC1(Iniciar Sesión)
+    UC2(Gestión VLANs/ACLs)
+    UC3(Simular Tráfico)
+    UC4(Análisis Inteligente)
+    end
+
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    
+    Tech --> UC1
+    Tech --> UC3
+    
+    UC4 -.-> IA
+```
+
+**Descripción**:
+- El **Administrador** tiene control total.
+- El **Técnico** puede simular pero tiene restricciones en configuración.
+- La **IA** asiste en el análisis de vulnerabilidades.
+    </textarea>
+
+    <textarea id="md-architecture" style="display:none;">
+# Arquitectura del Sistema
+
+```mermaid
+graph TD
+    User[👱 Usuario]
+    
+    subgraph Frontend_Desktop
+    UI[⚛️ React UI / Electron]
+    Store[📂 Context/State]
+    end
+    
+    subgraph Backend_Server
+    API[🚀 .NET 10 API]
+    Auth[🔐 Auth Service]
+    Engine[⚙️ Traffic Engine]
+    end
+    
+    subgraph Data_Layer
+    DB[(🐘 PostgreSQL 18)]
+    end
+    
+    subgraph External_AI
+    Ollama[🦙 Ollama Local]
+    Gemini[✨ Gemini Cloud]
+    end
+
+    User -->|Interacción| UI
+    UI -->|HTTPS/JSON| API
+    
+    API -->|Valida| Auth
+    API -->|Procesa| Engine
+    
+    Auth -->|Lee| DB
+    Engine -->|Logs/Rules| DB
+    
+    UI -.->|Análisis| Ollama
+    UI -.->|Fallback| Gemini
+```
+    </textarea>
+
+    <textarea id="md-data-flow" style="display:none;">
+# Flujo de Datos
+
+```mermaid
+sequenceDiagram
+    participant User as Usuario
+    participant UI as Frontend
+    participant API as Backend API
+    participant DB as PostgreSQL
+    
+    User->>UI: Simular Tráfico (Src->Dst)
+    UI->>API: POST /api/simulation
+    API->>DB: Obtener Reglas (ACLs)
+    DB-->>API: Lista de Reglas
+    API->>API: Ejecutar Lógica Engine
+    API->>DB: Guardar Log (Result)
+    API-->>UI: Resultado (SUCCESS/BLOCKED)
+    UI-->>User: Mostrar Animación y Log
+```
+    </textarea>
+
+    <script>
+        // Mermaid config
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
+
+        function showSection(id) {
+            const rawMd = document.getElementById('md-' + id).value;
+            const contentDiv = document.getElementById('content');
+
+            // 1. Render Markdown to HTML
+            contentDiv.innerHTML = marked.parse(rawMd);
+
+            // 2. Process Mermaid Blocks
+            // marked puts code in <pre><code class="language-mermaid">...</code></pre>
+            const mermaidBlocks = contentDiv.querySelectorAll('code.language-mermaid');
+
+            mermaidBlocks.forEach((block, index) => {
+                const pre = block.parentElement;
+                // Decode HTML entities (e.g. &gt; to >) to ensure Mermaid parses correctly
+                const rawGraph = decodeHtml(block.innerHTML);
+
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = rawGraph;
+
+                pre.replaceWith(div);
+            });
+
+            // 3. Run Mermaid Render
+            mermaid.run().then(() => {
+                console.log('Mermaid rendered successfully');
+            }).catch(err => {
+                console.error('Mermaid error:', err);
+            });
+
+            // 4. Update Sidebar Active State
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('bg-gray-800', 'text-white');
+                a.classList.add('text-gray-300');
+            });
+            // Find link matching the id
+            const activeLink = document.querySelector(`nav a[onclick="showSection('${id}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('bg-gray-800', 'text-white');
+                activeLink.classList.remove('text-gray-300');
+            }
+        }
+
+        // Init
+        showSection('intro');
+    </script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ interface AclTableProps {
   rules: ACLRule[];
   vlans: VLAN[];
   onAddRule: (rule: Omit<ACLRule, 'id'>) => void;
-  onDeleteRule: (id: string) => void;
+  onDeleteRule: (id: string | number) => void;
 }
 
 export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onDeleteRule }) => {
@@ -35,14 +35,14 @@ export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onD
           <ShieldCheck className="text-emerald-400" />
           Políticas de Firewall (ACLs)
         </h2>
-        
+
         {/* Simple Add Form */}
         <div className="grid grid-cols-1 sm:grid-cols-6 gap-2 items-end bg-slate-900/50 p-3 rounded-lg border border-slate-700">
           <div className="sm:col-span-1">
             <label className="text-[10px] uppercase text-slate-400 font-bold">Origen</label>
-            <select 
+            <select
               className="w-full bg-slate-900 border border-slate-700 text-xs rounded p-1.5 focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => setNewRule({...newRule, srcVlanId: Number(e.target.value)})}
+              onChange={(e) => setNewRule({ ...newRule, srcVlanId: Number(e.target.value) })}
               value={newRule.srcVlanId || ''}
             >
               <option value="">Seleccionar</option>
@@ -51,9 +51,9 @@ export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onD
           </div>
           <div className="sm:col-span-1">
             <label className="text-[10px] uppercase text-slate-400 font-bold">Destino</label>
-            <select 
+            <select
               className="w-full bg-slate-900 border border-slate-700 text-xs rounded p-1.5 focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => setNewRule({...newRule, dstVlanId: Number(e.target.value)})}
+              onChange={(e) => setNewRule({ ...newRule, dstVlanId: Number(e.target.value) })}
               value={newRule.dstVlanId || ''}
             >
               <option value="">Seleccionar</option>
@@ -62,35 +62,35 @@ export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onD
           </div>
           <div className="sm:col-span-1">
             <label className="text-[10px] uppercase text-slate-400 font-bold">Protocolo</label>
-            <select 
+            <select
               className="w-full bg-slate-900 border border-slate-700 text-xs rounded p-1.5 focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => setNewRule({...newRule, protocol: e.target.value as Protocol})}
+              onChange={(e) => setNewRule({ ...newRule, protocol: e.target.value as Protocol })}
               value={newRule.protocol}
             >
               {Object.values(Protocol).map(p => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
-           <div className="sm:col-span-1">
+          <div className="sm:col-span-1">
             <label className="text-[10px] uppercase text-slate-400 font-bold">Acción</label>
-            <select 
+            <select
               className={`w-full border border-slate-700 text-xs rounded p-1.5 font-bold ${newRule.action === Action.ALLOW ? 'text-emerald-400 bg-emerald-950/30' : 'text-red-400 bg-red-950/30'}`}
-              onChange={(e) => setNewRule({...newRule, action: e.target.value as Action})}
+              onChange={(e) => setNewRule({ ...newRule, action: e.target.value as Action })}
               value={newRule.action}
             >
               {Object.values(Action).map(a => <option key={a} value={a}>{a}</option>)}
             </select>
           </div>
           <div className="sm:col-span-1">
-             <label className="text-[10px] uppercase text-slate-400 font-bold">Descripción</label>
-             <input 
-               type="text" 
-               className="w-full bg-slate-900 border border-slate-700 text-xs rounded p-1.5"
-               placeholder="Motivo..."
-               value={newRule.description || ''}
-               onChange={(e) => setNewRule({...newRule, description: e.target.value})}
-             />
+            <label className="text-[10px] uppercase text-slate-400 font-bold">Descripción</label>
+            <input
+              type="text"
+              className="w-full bg-slate-900 border border-slate-700 text-xs rounded p-1.5"
+              placeholder="Motivo..."
+              value={newRule.description || ''}
+              onChange={(e) => setNewRule({ ...newRule, description: e.target.value })}
+            />
           </div>
-          <button 
+          <button
             onClick={handleAdd}
             className="bg-blue-600 hover:bg-blue-500 text-white rounded p-1.5 flex justify-center items-center transition-colors"
           >
@@ -101,7 +101,7 @@ export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onD
 
       <div className="flex-1 overflow-auto p-4">
         {rules.length === 0 ? (
-           <div className="text-center text-slate-500 py-8 italic">No hay reglas definidas. Tráfico implícitamente denegado.</div>
+          <div className="text-center text-slate-500 py-8 italic">No hay reglas definidas. Tráfico implícitamente denegado.</div>
         ) : (
           <table className="w-full text-left text-sm border-collapse">
             <thead>
@@ -129,7 +129,7 @@ export const AclTable: React.FC<AclTableProps> = ({ rules, vlans, onAddRule, onD
                   </td>
                   <td className="py-2 px-2 text-slate-400 text-xs hidden md:table-cell truncate max-w-[150px]">{rule.description}</td>
                   <td className="py-2 px-2 text-right">
-                    <button 
+                    <button
                       onClick={() => onDeleteRule(rule.id)}
                       className="text-slate-500 hover:text-red-400 transition-colors"
                     >

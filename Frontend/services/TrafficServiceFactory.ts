@@ -24,21 +24,29 @@ export class LocalTrafficService implements ITrafficService {
  * Espera que el backend esté corriendo en localhost:5000 por defecto.
  */
 export class DotNetTrafficService implements ITrafficService {
-  private apiUrl: string;
+  private baseUrl: string;
 
-  constructor(apiUrl: string = 'http://localhost:5000/api/simulation') {
-    this.apiUrl = apiUrl;
+  constructor(baseUrl: string = 'http://localhost:5009/api') {
+    this.baseUrl = baseUrl;
   }
 
   async simulate(context: TrafficContext): Promise<SimulationLog> {
     try {
-      const response = await fetch(this.apiUrl, {
+      const storedAuth = localStorage.getItem('netsecure_auth');
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      if (storedAuth) {
+        const { token } = JSON.parse(storedAuth);
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      // Append specific endpoint
+      const response = await fetch(`${this.baseUrl}/simulation`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        // Mapeamos el contexto al DTO que espera C#
+        headers,
         body: JSON.stringify(context)
       });
 

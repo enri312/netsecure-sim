@@ -76,35 +76,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setIsLoading(true);
 
         try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 800));
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5009/api';
 
-            // TODO: Replace with real API call to backend
-            // const response = await fetch('http://localhost:5000/api/auth/login', {
-            //   method: 'POST',
-            //   headers: { 'Content-Type': 'application/json' },
-            //   body: JSON.stringify({ username, password })
-            // });
+            const response = await fetch(`${apiUrl}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
 
-            // Mock authentication
-            const foundUser = MOCK_USERS.find(
-                u => u.username.toLowerCase() === username.toLowerCase() && u.password === password
-            );
-
-            if (foundUser) {
-                const authenticatedUser: User = {
-                    id: foundUser.id,
-                    username: foundUser.username,
-                    role: foundUser.role,
-                    token: `mock_jwt_token_${Date.now()}` // Will be real JWT from backend
-                };
-
-                setUser(authenticatedUser);
-                localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser));
-                return true;
+            if (!response.ok) {
+                console.error('Login failed:', response.statusText);
+                return false;
             }
 
-            return false;
+            const data = await response.json();
+
+            // Map API response to User object
+            const authenticatedUser: User = {
+                id: '1', // The backend calculates ID via JWT claims usually, or we can use the one returned
+                username: data.username,
+                role: data.role as UserRole,
+                token: data.token
+            };
+
+            setUser(authenticatedUser);
+            localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser));
+            return true;
+
         } catch (error) {
             console.error('Login error:', error);
             return false;
