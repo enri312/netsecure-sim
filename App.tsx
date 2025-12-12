@@ -38,7 +38,7 @@ export default function App() {
               NetSecure Sim
             </span>
           </h1>
-          <p className="text-slate-400 mt-1">Frontend Cliente (Compatible con Backend .NET 10 / C# 14)</p>
+          <p className="text-slate-400 mt-1">Simulador de Segmentación y Seguridad de Red (VLANs + UTM)</p>
         </div>
         <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
            <button 
