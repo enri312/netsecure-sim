@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 18 Database
+  db:
+    image: postgres:18
+    container_name: netsecure_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: netsecure
+      POSTGRES_PASSWORD: netsecure_secret
+      POSTGRES_DB: netsecure_sim
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U netsecure -d netsecure_sim"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # .NET API (optional, for containerized deployment)
+  api:
+    build:
+      context: ./NetSecure.Api
+      dockerfile: Dockerfile
+    container_name: netsecure_api
+    restart: unless-stopped
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=netsecure_sim;Username=netsecure;Password=netsecure_secret
+      - Jwt__Secret=NetSecureSimProductionSecretKey2024!Minimum32Chars
+      - Jwt__Issuer=NetSecure.Api
+      - Jwt__Audience=NetSecure.Client
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - full  # Only run with: docker-compose --profile full up
+
+volumes:
+  pgdata:
+    driver: local
+
+# Usage:
+# Start only database: docker-compose up -d db
+# Start everything:    docker-compose --profile full up -d

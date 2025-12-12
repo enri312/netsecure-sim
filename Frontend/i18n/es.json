@@ -1,0 +1,159 @@
+{
+    "common": {
+        "appName": "NetSecure Sim",
+        "appSubtitle": "Simulador de Segmentación y Seguridad de Red (VLANs + UTM)",
+        "loading": "Cargando...",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "add": "Agregar",
+        "close": "Cerrar",
+        "confirm": "Confirmar",
+        "search": "Buscar",
+        "filter": "Filtrar",
+        "export": "Exportar",
+        "refresh": "Actualizar",
+        "yes": "Sí",
+        "no": "No",
+        "error": "Error",
+        "success": "Éxito",
+        "warning": "Advertencia"
+    },
+    "login": {
+        "title": "Acceso Seguro",
+        "subtitle": "NetSecure Simulación",
+        "username": "USUARIO",
+        "usernamePlaceholder": "admin",
+        "password": "PASSWORD",
+        "passwordPlaceholder": "••••••••",
+        "submit": "Iniciar Sesión",
+        "submitting": "Ingresando...",
+        "error": "Credenciales inválidas",
+        "welcomeBack": "¡Bienvenido de nuevo!"
+    },
+    "nav": {
+        "dashboard": "Panel Principal",
+        "vlans": "Topología VLANs",
+        "acls": "Políticas Firewall",
+        "simulation": "Simulador",
+        "logs": "Registros",
+        "settings": "Configuración",
+        "logout": "Cerrar Sesión"
+    },
+    "header": {
+        "greeting": "Hola",
+        "role": {
+            "admin": "Administrador",
+            "technician": "Técnico"
+        },
+        "aiAnalysis": "Análisis IA",
+        "analyzing": "Analizando..."
+    },
+    "dashboard": {
+        "title": "Panel Principal",
+        "totalVlans": "Total VLANs",
+        "totalDevices": "Dispositivos",
+        "totalRules": "Reglas ACL",
+        "simulations": "Simulaciones",
+        "recentActivity": "Actividad Reciente",
+        "utmStatus": "Estado UTM"
+    },
+    "vlans": {
+        "title": "Topología Lógica (VLANs)",
+        "addVlan": "Agregar VLAN",
+        "editVlan": "Editar VLAN",
+        "deleteVlan": "Eliminar VLAN",
+        "vlanId": "ID VLAN",
+        "name": "Nombre",
+        "subnet": "Subred",
+        "devices": "Dispositivos",
+        "noDevices": "Sin dispositivos"
+    },
+    "devices": {
+        "title": "Dispositivos",
+        "addDevice": "Agregar Dispositivo",
+        "editDevice": "Editar Dispositivo",
+        "deleteDevice": "Eliminar Dispositivo",
+        "name": "Nombre",
+        "ip": "Dirección IP",
+        "type": "Tipo",
+        "types": {
+            "pc": "PC",
+            "server": "Servidor",
+            "printer": "Impresora",
+            "iot": "IoT"
+        }
+    },
+    "acls": {
+        "title": "Políticas de Firewall (ACLs)",
+        "addRule": "Agregar Regla",
+        "editRule": "Editar Regla",
+        "deleteRule": "Eliminar Regla",
+        "source": "Origen",
+        "destination": "Destino",
+        "protocol": "Protocolo",
+        "action": "Acción",
+        "description": "Descripción",
+        "actions": {
+            "allow": "PERMITIR",
+            "deny": "BLOQUEAR"
+        },
+        "implicitDeny": "Bloqueo implícito (Sin regla coincidente)",
+        "noRules": "No hay reglas definidas. Tráfico implícitamente denegado."
+    },
+    "simulation": {
+        "title": "Simulador de Tráfico",
+        "source": "Origen (Source)",
+        "destination": "Destino (Dest)",
+        "selectDevice": "Seleccionar dispositivo...",
+        "protocol": "Protocolo",
+        "execute": "EJECUTAR",
+        "processing": "PROCESANDO...",
+        "result": {
+            "success": "ÉXITO",
+            "blocked": "BLOQUEADO",
+            "utmBlocked": "BLOQUEADO UTM"
+        },
+        "executionMode": "Motor de Ejecución",
+        "modeLocal": "Browser (JS)",
+        "modeDotnet": ".NET Core",
+        "apiUrl": "URL API .NET"
+    },
+    "utm": {
+        "title": "Módulos UTM Firewall",
+        "ips": "IPS (Intrusion Prev.)",
+        "antivirus": "Anti-Virus (Gateway)",
+        "webFilter": "Web Filter",
+        "note": "*En modo .NET, estos flags se envían al backend para que el motor C# decida el bloqueo."
+    },
+    "logs": {
+        "title": "Log de Tráfico",
+        "waiting": "Esperando tráfico...",
+        "timestamp": "Hora",
+        "protocol": "Protocolo",
+        "result": "Resultado",
+        "reason": "Razón",
+        "exportCsv": "Exportar CSV",
+        "clearLogs": "Limpiar Logs",
+        "localEngine": "Motor JS Local",
+        "dotnetEngine": "Backend .NET 10"
+    },
+    "ai": {
+        "title": "Informe de Seguridad IA",
+        "analyzing": "Analizando configuración de red...",
+        "noResult": "No se pudo generar el análisis.",
+        "error": "Error al conectar con el asistente de IA.",
+        "usingOllama": "Usando Ollama (phi4-mini)",
+        "usingGemini": "Usando Gemini API"
+    },
+    "settings": {
+        "title": "Configuración",
+        "language": "Idioma",
+        "theme": "Tema",
+        "themes": {
+            "dark": "Oscuro",
+            "light": "Claro"
+        }
+    }
+}

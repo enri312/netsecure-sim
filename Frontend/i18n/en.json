@@ -1,0 +1,159 @@
+{
+    "common": {
+        "appName": "NetSecure Sim",
+        "appSubtitle": "Network Segmentation and Security Simulator (VLANs + UTM)",
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "close": "Close",
+        "confirm": "Confirm",
+        "search": "Search",
+        "filter": "Filter",
+        "export": "Export",
+        "refresh": "Refresh",
+        "yes": "Yes",
+        "no": "No",
+        "error": "Error",
+        "success": "Success",
+        "warning": "Warning"
+    },
+    "login": {
+        "title": "Secure Access",
+        "subtitle": "NetSecure Simulation",
+        "username": "USERNAME",
+        "usernamePlaceholder": "admin",
+        "password": "PASSWORD",
+        "passwordPlaceholder": "••••••••",
+        "submit": "Sign In",
+        "submitting": "Signing in...",
+        "error": "Invalid credentials",
+        "welcomeBack": "Welcome back!"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "vlans": "VLAN Topology",
+        "acls": "Firewall Policies",
+        "simulation": "Simulator",
+        "logs": "Logs",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "header": {
+        "greeting": "Hello",
+        "role": {
+            "admin": "Administrator",
+            "technician": "Technician"
+        },
+        "aiAnalysis": "AI Analysis",
+        "analyzing": "Analyzing..."
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "totalVlans": "Total VLANs",
+        "totalDevices": "Devices",
+        "totalRules": "ACL Rules",
+        "simulations": "Simulations",
+        "recentActivity": "Recent Activity",
+        "utmStatus": "UTM Status"
+    },
+    "vlans": {
+        "title": "Logical Topology (VLANs)",
+        "addVlan": "Add VLAN",
+        "editVlan": "Edit VLAN",
+        "deleteVlan": "Delete VLAN",
+        "vlanId": "VLAN ID",
+        "name": "Name",
+        "subnet": "Subnet",
+        "devices": "Devices",
+        "noDevices": "No devices"
+    },
+    "devices": {
+        "title": "Devices",
+        "addDevice": "Add Device",
+        "editDevice": "Edit Device",
+        "deleteDevice": "Delete Device",
+        "name": "Name",
+        "ip": "IP Address",
+        "type": "Type",
+        "types": {
+            "pc": "PC",
+            "server": "Server",
+            "printer": "Printer",
+            "iot": "IoT"
+        }
+    },
+    "acls": {
+        "title": "Firewall Policies (ACLs)",
+        "addRule": "Add Rule",
+        "editRule": "Edit Rule",
+        "deleteRule": "Delete Rule",
+        "source": "Source",
+        "destination": "Destination",
+        "protocol": "Protocol",
+        "action": "Action",
+        "description": "Description",
+        "actions": {
+            "allow": "ALLOW",
+            "deny": "DENY"
+        },
+        "implicitDeny": "Implicit deny (No matching rule)",
+        "noRules": "No rules defined. Traffic implicitly denied."
+    },
+    "simulation": {
+        "title": "Traffic Simulator",
+        "source": "Source",
+        "destination": "Destination",
+        "selectDevice": "Select device...",
+        "protocol": "Protocol",
+        "execute": "EXECUTE",
+        "processing": "PROCESSING...",
+        "result": {
+            "success": "SUCCESS",
+            "blocked": "BLOCKED",
+            "utmBlocked": "UTM BLOCKED"
+        },
+        "executionMode": "Execution Engine",
+        "modeLocal": "Browser (JS)",
+        "modeDotnet": ".NET Core",
+        "apiUrl": ".NET API URL"
+    },
+    "utm": {
+        "title": "UTM Firewall Modules",
+        "ips": "IPS (Intrusion Prev.)",
+        "antivirus": "Anti-Virus (Gateway)",
+        "webFilter": "Web Filter",
+        "note": "*In .NET mode, these flags are sent to the backend for the C# engine to decide blocking."
+    },
+    "logs": {
+        "title": "Traffic Log",
+        "waiting": "Waiting for traffic...",
+        "timestamp": "Time",
+        "protocol": "Protocol",
+        "result": "Result",
+        "reason": "Reason",
+        "exportCsv": "Export CSV",
+        "clearLogs": "Clear Logs",
+        "localEngine": "Local JS Engine",
+        "dotnetEngine": ".NET 10 Backend"
+    },
+    "ai": {
+        "title": "AI Security Report",
+        "analyzing": "Analyzing network configuration...",
+        "noResult": "Could not generate the analysis.",
+        "error": "Error connecting to AI assistant.",
+        "usingOllama": "Using Ollama (phi4-mini)",
+        "usingGemini": "Using Gemini API"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "theme": "Theme",
+        "themes": {
+            "dark": "Dark",
+            "light": "Light"
+        }
+    }
+}

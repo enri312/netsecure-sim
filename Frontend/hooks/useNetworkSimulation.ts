@@ -2,8 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { VLAN, ACLRule, SimulationLog, Protocol, UtmFeatures, ExecutionMode, ITrafficService } from '../types';
 import { INITIAL_VLANS, INITIAL_ACLS } from '../constants';
 import { LocalTrafficService, DotNetTrafficService } from '../services/TrafficServiceFactory';
-import { ISecurityAnalyzer } from '../types';
-import { securityAnalyzer } from '../services/geminiService';
+import { securityAnalyzer } from '../services/aiService';
 
 export const useNetworkSimulation = () => {
   // Application State
@@ -15,6 +14,7 @@ export const useNetworkSimulation = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationError, setSimulationError] = useState<string | null>(null);
+  const [aiProvider, setAiProvider] = useState<'ollama' | 'gemini' | 'none'>('none');
 
   // Architecture Configuration
   const [executionMode, setExecutionMode] = useState<ExecutionMode>('LOCAL');
@@ -27,8 +27,6 @@ export const useNetworkSimulation = () => {
     }
     return new LocalTrafficService();
   }, [executionMode, apiUrl]);
-  
-  const analyzer: ISecurityAnalyzer = securityAnalyzer;
 
   // Actions
   const addAcl = useCallback((rule: Omit<ACLRule, 'id'>) => {
@@ -56,7 +54,7 @@ export const useNetworkSimulation = () => {
 
       // Call Service (Local or DotNet)
       const log = await trafficService.simulate(context);
-      
+
       setLogs(prev => [log, ...prev].slice(0, 50));
     } catch (e) {
       console.error("Simulation failed", e);
@@ -69,10 +67,21 @@ export const useNetworkSimulation = () => {
   const runAnalysis = useCallback(async () => {
     setIsAnalyzing(true);
     setAiAnalysis('');
-    const result = await analyzer.analyze(vlans, acls, utm);
-    setAiAnalysis(result);
-    setIsAnalyzing(false);
-  }, [analyzer, vlans, acls, utm]);
+    setAiProvider('none');
+
+    try {
+      const result = await securityAnalyzer.analyze(vlans, acls, utm);
+      setAiAnalysis(result);
+      setAiProvider(securityAnalyzer.lastProvider);
+    } catch (error) {
+      console.error('AI Analysis error:', error);
+      setAiAnalysis(error instanceof Error
+        ? `Error: ${error.message}`
+        : 'Error al ejecutar análisis de IA. Verifique Ollama o la API de Gemini.');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  }, [vlans, acls, utm]);
 
   const clearAnalysis = useCallback(() => setAiAnalysis(''), []);
 
@@ -83,18 +92,19 @@ export const useNetworkSimulation = () => {
     logs,
     utm,
     aiAnalysis,
-    
+    aiProvider,
+
     // Status
     isAnalyzing,
     isSimulating,
     simulationError,
-    
+
     // Config
     executionMode,
     apiUrl,
     setExecutionMode,
     setApiUrl,
-    
+
     // Actions
     setUtm,
     addAcl,
