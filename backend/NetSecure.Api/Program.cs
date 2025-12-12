@@ -115,7 +115,7 @@ networkGroup.MapGet("/topology", async (AppDbContext db) =>
         ))
         .ToListAsync();
 
-    return Results.Ok(vlans);
+    return Results.Ok(new { vlans });
 });
 
 networkGroup.MapPost("/devices", async (CreateDeviceRequest request, AppDbContext db) =>

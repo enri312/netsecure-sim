@@ -81,9 +81,10 @@ public class AppDbContext : DbContext
             {
                 Id = 1,
                 Username = "CENV",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("8994C"),
+                // Valid BCrypt hash for "8994C"
+                PasswordHash = "$2a$11$D1HaR75k6pj6riZMp9rPSut5QAJUUTb7PgLloblA74sz7osAG7de.",
                 Role = "admin",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             }
         );
 
@@ -115,7 +116,7 @@ public class AppDbContext : DbContext
                 Action = "PERMITIR",
                 Description = "Admin acceso total a DMZ",
                 Priority = 1,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
             new AclRule
             {
@@ -126,7 +127,7 @@ public class AppDbContext : DbContext
                 Action = "PERMITIR",
                 Description = "Ventas acceso Web a DMZ",
                 Priority = 2,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
             new AclRule
             {
@@ -137,7 +138,7 @@ public class AppDbContext : DbContext
                 Action = "BLOQUEAR",
                 Description = "IoT no puede acceder a Admin",
                 Priority = 3,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             }
         );
     }

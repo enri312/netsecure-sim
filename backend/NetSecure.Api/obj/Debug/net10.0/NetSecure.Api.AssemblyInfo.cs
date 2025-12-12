@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NetSecure.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ea4fe555e5068e80274dd2191b3302d94b6df0b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52c3b1edf2bb66895d916f76a13198e4f277a2cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetSecure.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetSecure.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

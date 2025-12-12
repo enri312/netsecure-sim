@@ -14,7 +14,7 @@ export interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     isLoading: boolean;
-    login: (username: string, password: string) => Promise<boolean>;
+    login: (username: string, password: string) => Promise<string | null>;
     logout: () => void;
     hasPermission: (permission: string) => boolean;
 }
@@ -39,11 +39,6 @@ const rolePermissions: Record<UserRole, string[]> = {
         'analyze:ai'
     ]
 };
-
-// Mock users (will be replaced by backend API)
-const MOCK_USERS = [
-    { id: '1', username: 'CENV', password: '8994C', role: 'admin' as UserRole }
-];
 
 // Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -72,7 +67,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     // Login function
-    const login = useCallback(async (username: string, password: string): Promise<boolean> => {
+    const login = useCallback(async (username: string, password: string): Promise<string | null> => {
         setIsLoading(true);
 
         try {
@@ -86,7 +81,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             if (!response.ok) {
                 console.error('Login failed:', response.statusText);
-                return false;
+                if (response.status === 401) return 'Usuario o contraseña incorrectos';
+                if (response.status === 404) return 'Servidor no encontrado (404)';
+                return `Error del servidor: ${response.status}`;
             }
 
             const data = await response.json();
@@ -101,11 +98,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             setUser(authenticatedUser);
             localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser));
-            return true;
+            return null; // Success (no error message)
 
         } catch (error) {
             console.error('Login error:', error);
-            return false;
+            if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+                return 'No se pudo conectar con el servidor. Verifique que el Backend esté encendido.';
+            }
+            return 'Error de conexión desconocido.';
         } finally {
             setIsLoading(false);
         }

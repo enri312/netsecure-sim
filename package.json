@@ -1,0 +1,9 @@
+{
+    "name": "netsecure-sim-root",
+    "version": "1.0.0",
+    "description": "Root runner for NetSecure Sim",
+    "scripts": {
+        "start": "npx concurrently -k -n \"BACKEND,FRONTEND\" -c \"bgBlue.bold,bgGreen.bold\" \"cd backend/NetSecure.Api && dotnet run\" \"cd Frontend && npm run electron:dev\"",
+        "db": "cd backend && docker-compose up -d"
+    }
+}

@@ -21,10 +21,10 @@ export const LoginPage: React.FC = () => {
         setError('');
         setIsSubmitting(true);
 
-        const success = await login(username, password);
+        const errorMessage = await login(username, password);
 
-        if (!success) {
-            setError(t('login.error'));
+        if (errorMessage) {
+            setError(errorMessage);
         }
 
         setIsSubmitting(false);
