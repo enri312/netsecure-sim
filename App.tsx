@@ -1,0 +1,163 @@
+import React from 'react';
+import { useNetworkSimulation } from './hooks/useNetworkSimulation';
+import { VlanDisplay } from './components/VlanDisplay';
+import { AclTable } from './components/AclTable';
+import { SimulationPanel } from './components/SimulationPanel';
+import { Terminal, ShieldCheck, BrainCircuit, XCircle, CheckCircle, AlertTriangle } from 'lucide-react';
+
+export default function App() {
+  // Use Custom Hook (Controller)
+  const {
+    vlans,
+    acls,
+    logs,
+    utm,
+    aiAnalysis,
+    isAnalyzing,
+    isSimulating,
+    simulationError,
+    executionMode,
+    setExecutionMode,
+    apiUrl,
+    setApiUrl,
+    setUtm,
+    addAcl,
+    deleteAcl,
+    runSimulation,
+    runAnalysis,
+    clearAnalysis
+  } = useNetworkSimulation();
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-4 md:p-6 lg:p-8">
+      <header className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+            <ShieldCheck className="w-8 h-8 text-blue-500" />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
+              NetSecure Sim
+            </span>
+          </h1>
+          <p className="text-slate-400 mt-1">Frontend Cliente (Compatible con Backend .NET 10 / C# 14)</p>
+        </div>
+        <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
+           <button 
+            onClick={runAnalysis}
+            disabled={isAnalyzing}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 rounded-lg font-medium transition-all shadow-lg shadow-purple-900/20 disabled:opacity-50 text-white"
+          >
+            <BrainCircuit className={`w-5 h-5 ${isAnalyzing ? 'animate-pulse' : ''}`} />
+            {isAnalyzing ? 'Analizando...' : 'Análisis IA'}
+          </button>
+        </div>
+      </header>
+
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Left Column: Network & Simulation (8 cols) */}
+        <div className="lg:col-span-8 space-y-6">
+          
+          {/* Network Visualization */}
+          <section className="space-y-2">
+            <h2 className="text-lg font-semibold text-slate-300">Topología Lógica (VLANs)</h2>
+            <VlanDisplay vlans={vlans} />
+          </section>
+
+          {/* ACL Management */}
+          <section className="h-[400px]">
+             <AclTable rules={acls} vlans={vlans} onAddRule={addAcl} onDeleteRule={deleteAcl} />
+          </section>
+
+        </div>
+
+        {/* Right Column: Controls & Logs (4 cols) */}
+        <div className="lg:col-span-4 space-y-6 flex flex-col h-full">
+          
+          {/* Controls */}
+          <section className="flex-shrink-0">
+             <SimulationPanel 
+               vlans={vlans} 
+               onSimulate={runSimulation} 
+               utm={utm} 
+               setUtm={setUtm} 
+               isSimulating={isSimulating}
+               simulationError={simulationError}
+               executionMode={executionMode}
+               setExecutionMode={setExecutionMode}
+               apiUrl={apiUrl}
+               setApiUrl={setApiUrl}
+             />
+          </section>
+
+          {/* Console Output */}
+          <section className="flex-1 min-h-[300px] bg-slate-900 rounded-lg border border-slate-700 flex flex-col overflow-hidden shadow-inner shadow-black/50">
+            <div className="p-3 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-slate-400" />
+                <h3 className="font-mono text-sm font-bold text-slate-300">Log de Tráfico</h3>
+              </div>
+              <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${executionMode === 'DOTNET_API' ? 'bg-blue-900/30 text-blue-400 border-blue-800' : 'bg-slate-700 text-slate-400 border-slate-600'}`}>
+                {executionMode === 'LOCAL' ? 'Motor JS Local' : 'Backend .NET 10'}
+              </span>
+            </div>
+            <div className="flex-1 overflow-auto p-2 space-y-2 font-mono text-xs">
+              {logs.length === 0 && (
+                <div className="text-slate-600 text-center mt-10">Esperando tráfico...</div>
+              )}
+              {logs.map(log => (
+                <div key={log.id} className="p-2 border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
+                  <div className="flex justify-between text-slate-500 mb-1">
+                    <span>[{log.timestamp}]</span>
+                    <span className="font-bold">{log.protocol}</span>
+                  </div>
+                  <div className="grid grid-cols-[1fr,auto,1fr] items-center gap-2 mb-1">
+                    <span className="text-blue-300 truncate">{log.srcDevice}</span>
+                    <span className="text-slate-600">→</span>
+                    <span className="text-purple-300 truncate text-right">{log.dstDevice}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {log.result === 'SUCCESS' && <CheckCircle className="w-3 h-3 text-emerald-500" />}
+                    {log.result === 'BLOCKED' && <XCircle className="w-3 h-3 text-red-500" />}
+                    {log.result === 'UTM_BLOCKED' && <AlertTriangle className="w-3 h-3 text-yellow-500" />}
+                    <span className={`
+                      ${log.result === 'SUCCESS' ? 'text-emerald-500' : ''}
+                      ${log.result === 'BLOCKED' ? 'text-red-500' : ''}
+                      ${log.result === 'UTM_BLOCKED' ? 'text-yellow-500' : ''}
+                    `}>
+                      {log.result}: {log.reason}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+
+      {/* AI Analysis Modal / Overlay */}
+      {aiAnalysis && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
+          <div className="bg-slate-900 border border-slate-600 rounded-xl w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl">
+            <div className="p-4 border-b border-slate-700 flex justify-between items-center bg-slate-800 rounded-t-xl">
+              <h2 className="text-xl font-bold text-purple-400 flex items-center gap-2">
+                <BrainCircuit /> Informe de Seguridad IA
+              </h2>
+              <button onClick={clearAnalysis} className="text-slate-400 hover:text-white">
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="p-6 overflow-auto text-slate-300 prose prose-invert prose-sm max-w-none leading-relaxed">
+               {aiAnalysis.split('\n').map((line, i) => {
+                 if (line.startsWith('## ')) return <h2 key={i} className="text-xl font-bold text-white mt-4 mb-2">{line.replace('## ', '')}</h2>;
+                 if (line.startsWith('### ')) return <h3 key={i} className="text-lg font-semibold text-blue-300 mt-3 mb-1">{line.replace('### ', '')}</h3>;
+                 if (line.startsWith('- ')) return <li key={i} className="ml-4 list-disc marker:text-slate-500">{line.replace('- ', '')}</li>;
+                 if (line.match(/^\d\./)) return <li key={i} className="ml-4 list-decimal marker:text-slate-500">{line.replace(/^\d\.\s/, '')}</li>;
+                 return <p key={i} className="mb-2">{line}</p>;
+               })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

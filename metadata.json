@@ -1,0 +1,5 @@
+{
+  "name": "NetSecure Sim - Frontend",
+  "description": "Frontend cliente para simulación de redes seguras. Diseñado para operar stand-alone o conectado a un backend .NET 10 (C# 14).",
+  "requestFramePermissions": []
+}
